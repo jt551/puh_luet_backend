@@ -51,6 +51,24 @@ app.get('/api/persons', (request, response) => {
     }
   })
 
+  app.delete('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    persons = persons.filter(person => person.id !== id)
+  
+    response.status(204).end()
+  })
+
+  app.post('/api/persons', (request, response) => {
+    const id = Math.floor(Math.random() * 100000000);
+  
+    const newPerson = request.body
+    newPerson.id = id;
+    console.log(newPerson);
+    persons = persons.concat(newPerson)
+  
+    response.json(newPerson)
+  })
+
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
