@@ -1,9 +1,14 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
+morgan.token('bodytiedot', function (req) {
+  return JSON.stringify(req.body)
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :bodytiedot'))
 
 let persons = [
     { 
@@ -59,13 +64,29 @@ app.get('/api/persons', (request, response) => {
   })
 
   app.post('/api/persons', (request, response) => {
-    const id = Math.floor(Math.random() * 100000000);
-  
-    const newPerson = request.body
+    const id = Math.floor(Math.random() * 100000000);  
+    const newPerson = request.body;
+    if(!newPerson.name || !newPerson.number){
+      //console.log(!newPerson.name, !newPerson.number);
+      
+      return response.status(400).json({
+        error: 'Name and/or Number missing'
+      })
+    }
     newPerson.id = id;
-    console.log(newPerson);
-    persons = persons.concat(newPerson)
-  
+    //console.log(newPerson);
+
+    const haku = persons.find(p => p.name === newPerson.name)
+    if(haku){
+      //console.log("if hakutulos: ", haku);
+      
+      return response.status(400).json({
+        error: 'Name must be unique'
+      })
+    }
+    
+
+    persons = persons.concat(newPerson)  
     response.json(newPerson)
   })
 
