@@ -1,0 +1,21 @@
+.error {
+    background-color: red;
+    color: white;
+    border: solid;
+    padding: 1rem;
+    font-size: 20px;
+}
+
+.notify {
+    background-color: green;
+    border: solid;
+    padding: 1rem;
+    font-size: 20px;
+    color: white;
+}
+
+h2 {
+    background-color: blue;
+    color: white;
+    padding: 1rem;
+}
