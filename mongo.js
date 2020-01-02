@@ -22,6 +22,18 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema)
 
+
+if ( process.argv.length === 3 ) {
+    console.log('if clause password only ')
+    Person.find({}).then(result => {
+        result.forEach(contact => {
+          console.log(contact.name + ": " + contact.number)
+        })
+        mongoose.connection.close()
+      })
+    
+  } else{
+    console.log('else clause ! argv.length<4')
 const person = new Person({
   name: `${newName}`,
   number: `${newNumber}`
@@ -31,3 +43,4 @@ person.save().then(response => {
   console.log('contact saved!');
   mongoose.connection.close();
 })
+  }
