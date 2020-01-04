@@ -56,7 +56,7 @@ app.get('/api/persons', (request, response, next) => {
   })
 
   app.post('/api/persons', (request, response, next) => {
-    const id = Math.floor(Math.random() * 100000000);  
+     
     const newName = request.body.name;
     const newNumber = request.body.number;
 
